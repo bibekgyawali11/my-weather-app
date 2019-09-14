@@ -2,18 +2,43 @@ import React from 'react';
 
 
 class Weather extends React.Component{
-    render(){
+    constructor(props){
+        super(props)
+        this.state= {
+            active: false
+        }
+       // this.handleClicl = this.handleClick.bind(this)
+    }
+    handleClick = () =>{
+        this.setState({active: !this.state.active});
+    }
+    render()
+    {
+       var temp = this.props.temperature;
+      // var stemp;
+       var scale;
+       if (this.state.active)
+                {
+                    temp = (temp *9/5) +32;
+                  //  stemp = temp.toFixed(2);
+                    scale = 'C';
+                }
+       else {
+           temp = this.props.temperature;
+          // stemp = temp.toFixed(2);
+           scale = 'F';
+       }         
     return(
         <div className="weather__info">
-
         {
+            
             this.props.city && this.props.country && <p className="weather__key">Location:
             <span className="weather__value">    {this.props.city}, {this.props.country} </span>  
             </p> 
         }
         {
             this.props.temperature && <p className="weather__key">Temperature:
-                <span className="weather__value"> {this.props.temperature} C </span>
+                <span className="weather__value"> {temp} <button onClick={this.handleClick}> {scale} </button></span>
             </p> 
         } 
         {
@@ -33,5 +58,8 @@ class Weather extends React.Component{
     );
     }
 }
+
+
+
 
 export default Weather;
